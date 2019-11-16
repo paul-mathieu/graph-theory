@@ -33,7 +33,7 @@ class ...
         return nav, dist
     
     
-    #fonction qui regarde si il ne reste qu'un élément dans la liste
+    #fonction qui regarde s'il ne reste qu'un élément dans la liste
     def estArrive(nav):
         
         #compte le nombre de '' et regarde si c'est égal à len(nav)+1
