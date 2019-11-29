@@ -3,11 +3,11 @@ TP1 : Arbres Génériques
 """
 
 
-"""
-~~~~~~~~~~~~~~~~~~~~~~
- Classe 'Node'
-~~~~~~~~~~~~~~~~~~~~~~
-"""
+#==============================================================================        
+#==============================================================================        
+#   Classe 'Node'
+#==============================================================================        
+#==============================================================================        
 
 class Node :
     
@@ -33,21 +33,44 @@ class Node :
         #avec le nom et l'étiquette de chaque enfant
         # => {'node4': '3', 'node5': '3', 'node6': '9'}
         self.dChildren = dict([(var_name(a), a.labels) for a in children])
-    
+
+
+
+
     def tuple(self):
         return self, var_name(self), self.labels
-    
-    #renvoie V et E à partir d'un noeud défini comme une racine
+
+
+
+
     def makeItATree(self):
+        
+        """
+        renvoie V et E à partir d'un noeud défini comme une racine
+        """
+        
         return self.listV(), self.listE()
-    
-    #fonction qui renvoie tous les noeuds
+ 
+
+
+
     def listV(self):
+        
+        """
+        fonction qui renvoie tous les noeuds
+        """
+        
         #liste sans doublons de tous les noeuds de .listE()
         return list(set([b for a in self.listE() for b in a]))
+
+
+
     
-    #fonction qui renvoie tous les arcs
     def listE(self):
+        
+        """
+        fonction qui renvoie tous les arcs
+        """
         
         #tuple entre le noeud et ses enfants
         tempListe = [(self, enfant) for enfant in self.children]
@@ -58,9 +81,18 @@ class Node :
                 tempListe.append(tupleEnfant)
         
         return tempListe
+ 
     
-    #fonction qui renvoie tous les déscendants d'un noeud
+#==============================================================================        
+#    Q 4.1 - 
+#==============================================================================        
+    
+    
     def descendants(self):
+        
+        """
+        fonction qui renvoie tous les descendants d'un noeud
+        """
         
         #initialisation de la liste à vide
         listeEnfants = []
@@ -75,10 +107,16 @@ class Node :
             listeEnfants += enfant.descendants()
         
         return listeEnfants
+
+
+
     
-    #fonction qui regarde tous les ancetres
-    #on a besoin du tree pour connaitre la root de l'arbre (le plus lointain parent)
     def ascendants(self, tree):
+
+        """
+        fonction qui regarde tous les ancetres
+        on a besoin du tree pour connaitre la root de l'arbre (le plus lointain parent)
+        """    
         
         #initialisation de la liste à vide
         listeParents = []
@@ -97,18 +135,31 @@ class Node :
         
         #retour de la liste des parents
         return listeParents
+ 
+    
+    
     
     def is_leaf(self):
-        return len(node4.children) == 0
+        
+        """
+        Retourne un booléen qui vérifie si le noeud est une feuille
+        """
+        
+        return len(self.children) == 0
         
     
-    """
-    Début de la partie de test
-    """
 
+#==============================================================================        
+#    Début de la partie de test
+#==============================================================================        
 
-    #fonction privee qui renvoie tous les déscendants et lui meme  
+ 
     def makeItATreePrivate(self):
+        
+        """
+        fonction privee qui renvoie tous les déscendants et lui meme 
+        """
+        
         #si le noeud n'a pas d'enfants = si c'est une feuille
         if self.get_content()['Enfants'] == []:
             return (var_name(self), self.labels)
@@ -117,8 +168,13 @@ class Node :
         return (var_name(self), self.labels), [a.makeItATreePrivate() for a in self.children]
 
 
-    #fonction qui renvoie les feuilles de l'arbre
+
+
     def leafIfTree(self):
+        
+        """
+        fonction qui renvoie les feuilles de l'arbre
+        """
         
         #si le noeud n'a pas d'enfants = si c'est une feuille
         if self.get_content()['Enfants'] == []:
@@ -126,17 +182,26 @@ class Node :
         
         #sinon retourne la liste des ses enfants
         return [a.leafIfTree() for a in self.children]
+
+
+
     
-    #fonction qui renvoie tous les noeuds nommés
     def listVn(self):
         
+        """
+        fonction qui renvoie tous les noeuds nommés        
+        """
+        
         #on prend l'arbre en carton
-        tempTree = self.makeItATreePrivate()
+        #tempTree = self.makeItATreePrivate()
         
         #on transforme l'arbre en carton pour ne récupérer que les éléments
         
+        
         V = self.makeItATreePrivate()
         tempList=[]
+        
+        #
         while sum(list(map(lambda x : not isTupleNode(x), V))) != 0:
             for sublist in V:
                 if isTupleNode(sublist):
@@ -150,32 +215,194 @@ class Node :
         return V
 
     
-    """
-    Fin de la partie de test
-    """
+#==============================================================================        
+#    Fin de la partie de test
+#==============================================================================        
 
 
     
+
+
+
+#==============================================================================        
+#    Q 2.1 - la liste des etiquettes d'un noeud binaire
+#                 (Primitive Content)
+#==============================================================================        
+
+   
+    def content(self): 
+        
+        """
+        
+        Cette fonction retourne le contenu d'un noeud avec 
+        les informations suivantes :
+            - l'étiquette
+            - les enfants (sous forme de liste)
+            
+        """
+        
+        return {'Etiquette' : self.labels, 'Enfants' : self.children}
+
+
+
+
+
+
+
+
+
+
+
+
+#==============================================================================        
+#==============================================================================        
+#   Classe 'RTree'
+#==============================================================================        
+#==============================================================================        
+
+
+
+
+class RTree(Node):
+    
+    """
+    A rooted tree is represented by its root node
+    """
+    
+    def __init__(self, labels, children = []):
+        
+        super().__init__(labels, children)
+
+
+
+
+#==============================================================================        
+#    Q 3.1 - la primitive « root »
+#==============================================================================        
+
+    #méthode prof
+    def root(self):
+        return self
+        
+        
+
+#==============================================================================        
+#    Q 3.2 - la primitive « sub_tree »
+#==============================================================================        
+
+
+    def sub_tree(self):
+        """
+        all the sub tree are defined by the children of the root of the tree
+        """
+        return self.children
+
+
+
+    
+#==============================================================================        
+#    Q 3.3 - la méthode « display_depth »
+#            (affichage des étiquettes de l’arborescence avec un parcours 
+#            en profondeur)
+#==============================================================================        
+    
+    
+    def display_depth(self):
+        
+#        listeLabels.append(self.labels)
+        
+#        print(str(listeLabels))
+        
+        listeLabels = [self.labels]
+        
+        for child in self.children:
+                        
+            if not child.is_leaf():
+                
+                listeLabels += child.display_depth()
+            
+            else:
+                
+                listeLabels.append(child.labels)
+                
+        
+        return listeLabels
+
 
         
-    """    
-    Q 1.1 - la liste des etiquettes d'un noeud binaire
-                 (Primitive Content)
-    """
+
+            
+    def display_depthOL2(self):
+          
+        return [self.labels] + [child.display_depthOL2() if not child.is_leaf() else child.labels for child in self.children]
+        
+
+
+#==============================================================================        
+#    Q 3.4 - la méthode « display_width »
+#            (affichage des étiquettes de l’arborescence avec un parcours en largeur)
+#==============================================================================        
     
-    def content(self): #accesseur
-        return dict((('Etiquette',self.labels), ('Enfants',self.children)))
+
+    #fonctionne
+    def display_width(self, listeLabels = []):
+
+        for child in self.children: 
+            
+            listeLabels.append(child.labels) 
+            
+        for child in self.children:   
+            
+            child.display_width(listeLabels)
+            
+        return [self.labels] + listeLabels  
 
 
 
-"""
-~~~~~~~~~~~~~~~~~~~~~~
- Classe 'RTree'
-~
-~~~~~~~~~~~~~~~~~
-"""
+    #python est étrange 
+    def display_width2(self, listeLabels = []):
+            
+        listeLabels += [child.labels for child in self.children]
+#        print(str(listeLabels))
+        
+        for child in self.children:
+                
+            listeLabels.append(child.display_width2(listeLabels))
+       
+#        listeLabels = [self.labels] + listeLabels
+        
+        return listeLabels
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
-class RTree:
+#==============================================================================        
+#==============================================================================        
+#   Classe 'ETree' => mais ensembliste < recursif
+#==============================================================================        
+#==============================================================================        
+
+
+
+
+class ETree:
     
     """
     A rooted tree is represented by
@@ -188,17 +415,19 @@ class RTree:
         self.edges = edges
 
 
-    
-    """
-    Q 3.1 - la primitive « root »
-    """
-    
+
+#==============================================================================        
+#    Q 3.1 - la primitive « root »
+#==============================================================================        
+
     #méthode prof
-    def root(self):
+    def rootProf(self):
+        
         """
         Return the root of rooted tree
         root : Rtree → Node
         """
+        
         # Extract all father nodes and remove double
         f = set([e[0] for e in self.edges])
         
@@ -209,29 +438,48 @@ class RTree:
         r = [e for e in f if e not in c]
         
         return r[0]
+
+
+
     
     #méthode moi
-    def root2(self):        
+    def root(self): 
+        
+        """
+        retourne la liste
+        """
+        
         #liste des ascendents d'un noeud
-        tempList = self.vertices[0].ascendants(self)       
+        tempList = self.vertices[0].ascendants(self)
+        
         #dernier element de cette liste = plus root
         return tempList[len(tempList) - 1]
+    
 
-    """
-    Q 3.2 - la primitive « sub_tree »
-    """
+
+
+#==============================================================================        
+#    Q 3.2 - la primitive « sub_tree »
+#==============================================================================        
     
     #fonction qui prend un noeud et qui le transforme en racine d'arbre
     def sub_tree(self, node):
         return node.listV(), node.listE()
     
-    """
-    Q 3.3 - la méthode « display_depth »
-            (affichage des étiquettes de l’arborescence avec un parcours en profondeur)
-    """
+    
+
+    
+#==============================================================================        
+#    Q 3.3 - la méthode « display_depth »
+#            (affichage des étiquettes de l’arborescence avec un parcours en profondeur)
+#==============================================================================        
     
     def protoProfondeur(): #mettre parametre
-
+       
+        """
+        ...
+        """
+        
         # do nothing if the rooted tree is empty
         if self.is_empty() :
             return aaa
@@ -241,12 +489,14 @@ class RTree:
         
         # call the coresponding method on the forest
         return f.protoProfondeur(...)
+
+
     
     
-    """
-    Q 3.4 - la méthode « display_width »
-            (affichage des étiquettes de l’arborescence avec un parcours en largeur)
-    """
+#==============================================================================        
+#    Q 3.4 - la méthode « display_width »
+#            (affichage des étiquettes de l’arborescence avec un parcours en largeur)
+#==============================================================================        
     
     def protoLargeur(): #mettre parametre
         
@@ -257,12 +507,14 @@ class RTree:
         # do nothing if the rooted tree is empty
         
         if self.is_empty() :
-            return impass
+            pass
         else:
             # transform the rooted tree in forest
             f = Forest([self])
             # call the coresponding method on the forest
             return f.protoLargeur(...)
+
+
                 
     
     #fonction qui retourne la profondeur d'un arbre
@@ -270,9 +522,14 @@ class RTree:
         return len(self.root().descendants())+1
 
 
-"""
-AUTRES FONCTIONS
-"""
+
+
+#==============================================================================        
+
+#   AUTRES FONCTIONS
+
+#==============================================================================        
+
 
 #fonction qui renvoie le nom d'une variable
 def var_name(var):
@@ -280,6 +537,7 @@ def var_name(var):
         if value is var:
             return name
     return 'inconnu'
+
 
 
 
@@ -294,26 +552,37 @@ def isTupleNode(vTuple):
 
 
 
+#~~~~~~~~~~~~~~~~~~~~~~
+# Création de l'arbre
+#~~~~~~~~~~~~~~~~~~~~~~
 
-"""
-~~~~~~~~~~~~~~~~~~~~~~
- Création de l'arbre
-~~~~~~~~~~~~~~~~~~~~~~
-"""
+
 
 
 # Question 1 : implémentation de l'arborescence
 
-node6 = Node("9")
-node5 = Node("3")
-node4 = Node("3")
-node3 = Node("m")
-node2 = Node("a")
-node1 = Node("2", [node4, node5, node6])
-node0 = Node("z", [node1, node2, node3])
+#node6 = Node("9")
+#node5 = Node("3")
+#node4 = Node("3")
+#node3 = Node("m")
+#node2 = Node("a")
+#node1 = Node("2", [node4, node5, node6])
+#node0 = Node("z", [node1, node2, node3])
 
-V, E = node0.makeItATree()
-tree = RTree(V, E)
+
+
+node6 = RTree("9")
+node5 = RTree("3")
+node4 = RTree("3")
+node3 = RTree("m")
+node2 = RTree("a")
+node1 = RTree("2", [node4, node5, node6])
+node0 = RTree("z", [node1, node2, node3])
+
+
+
+#V, E = node0.makeItATree()
+#tree = ETree(V, E)
 
 
 
