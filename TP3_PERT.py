@@ -37,11 +37,64 @@ class Etape:
         return self.number
     
     def get_next_steps(self):
+        """
+        
+        """
         return [tache.next_step for tache in self.taches]
     
-    def get_previous_steps(self):
-        pass
+    def get_previous_steps(self, etape_recherche, liste_passage = [], liste_previous_steps = []):
+        """
+        
+        """ 
+        if etape_recherche in self.get_next_steps():
+            liste_previous_steps.append(self)
+
+        for etape in self.get_next_steps():
+            
+            if not etape in liste_passage:
+            
+                liste_passage.append(etape)
+                
+                liste_previous_steps += etape.get_previous_steps(etape_recherche, 
+                                                                 liste_passage, 
+                                                                 liste_previous_steps)
+                
+        return list(set(liste_previous_steps))
     
+#        if etape_recherche in self.get_next_steps():
+#            print("t", end = "")
+#            liste_previous_steps = [self]
+#        
+#        
+#        for etape in self.get_next_steps():
+#            
+#            if not etape in liste_passage:
+##            if True:
+#            
+#                liste_passage.append(etape)
+#                
+#                liste_previous_steps += etape.get_previous_steps(liste_passage)
+#                
+#        return liste_previous_steps       
+    
+    
+# =============================================================================
+# Question 4) Chemin Critique
+# =============================================================================
+
+    def critique(self):
+        """
+        Prend en parametre un diagramme pert
+        Retourne le chemin critique
+        """
+        chemin_critique = [self.get_number()]
+        
+        for etape in self.get_next_steps():
+            print(etape.get_au_plus_tot())
+            print(etape.au_plus_tard())
+            if etape.get_au_plus_tot() == etape.au_plus_tard():
+                return chemin_critique + etape.critique()
+
 
 # =============================================================================
 # Tests
@@ -49,7 +102,7 @@ class Etape:
     
     def parcourir(self, liste_passage = [], liste_numbers = []):
         
-        liste_numbers = [self.get_number()]
+        liste_numbers = [self]
         
         for etape in self.get_next_steps():
             
@@ -86,27 +139,30 @@ class Tache:
         return self.name
     
     def get_duration(self):
-        pass
+        return self.duration
     
-    def get_begin_step(self):
-        pass
-    
+    def get_begin_step(self, etape0):
+        
+        end_step = self.get_end_step()
+        
+        liste_parent_etape_of_end_step = etape0.get_previous_steps(end_step)
+        
+        for etape in liste_parent_etape_of_end_step:
+            
+            for tache in etape.taches:
+                
+                if tache == self:
+                    
+                    return etape
+        
+
     def get_end_step(self):
-        pass
+        return self.next_step
     
 
 
 
-# =============================================================================
-# Question 4) Chemin Critique
-# =============================================================================
 
-def critique():
-    """
-    Prend en parametre un diagramme pert
-    Retourne le chemin critique (Djikstra)
-    """
-    pass
 
 # =============================================================================
 # Question 5.1) compute_au_plus_tot
@@ -132,6 +188,25 @@ def compute_au_plus_tard():
     pass
 
 
+# =============================================================================
+# Tests
+# =============================================================================
+    
+    def parcourir(self, liste_passage = [], liste_return = []):
+        
+        liste_return = [self]
+        
+        for etape in self.get_next_steps():
+            
+            if not etape in liste_passage:
+#            if True:
+            
+                liste_passage.append(etape)
+                
+                liste_return += etape.parcourir(liste_passage)
+                
+        return liste_return
+            
 
 
 
@@ -180,9 +255,31 @@ etape0 = Etape('0', 0, 0, [tacheA])
 #TacheH = Tache('H', 10)
 
 
+# =============================================================================
+# Tests des fonctions :
+# =============================================================================
+
+#etape0.parcourir()
+
+#print(etape0.get_previous_steps(etape7))
+#print([etape.number for etape in etape0.get_previous_steps(etape7)])
+
+etape0.critique()
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+#print(tacheD.get_begin_step(etape0).number)
 
