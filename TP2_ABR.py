@@ -10,50 +10,45 @@ from random import randint
 import numpy as np
 
 
-"""
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~ Recherche dans un ABR :
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~ Recherche dans un ABR :
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+##noeud = (x, FilsGauche, FilsDroit)
+#recherche(noeud, valeur)
+#        
+#    #si la valeur cherchée n'existe pas    
+#    Si noeud est vide
+#        retourner 'erreur'
+#    
+#    #si le noeud contient la valeur
+#    Si noeud.valeur
+#        retourner Vrai
+#    
+#    #si le noeud a une valeur inférieure
+#    Sinon si valeur < noeud.valeur
+#        retourner Recherche(noeud.FilsGauche, valeur)
+#    
+#    #si le noeud a une valeur supérieure
+#    Sinon
+#        retourner Recherche(noeud.FilsDroit, valeur)
+#
+#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~ Insertion dans un ABR :
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+##noeud = (x, FilsGauche, FilsDroit)
+#insertion(noeud, valeur)
+#    Si noeud est vide
+#        retourner valeur
+#    Sinon Si valeur < noeud.valeur
+#        retourner (noeud.valeur, insertion(noeud.FilsGauche, valeur), noeud.FilsDroit)
+#    Sinon
+#        retourner (noeud.valeur, noeud.FilsGauche, insertion(noeud.FilsDroit, valeur))
+#    
 
-#noeud = (x, FilsGauche, FilsDroit)
-recherche(noeud, valeur)
-        
-    #si la valeur cherchée n'existe pas    
-    Si noeud est vide
-        retourner 'erreur'
-    
-    #si le noeud contient la valeur
-    Si noeud.valeur
-        retourner Vrai
-    
-    #si le noeud a une valeur inférieure
-    Sinon si valeur < noeud.valeur
-        retourner Recherche(noeud.FilsGauche, valeur)
-    
-    #si le noeud a une valeur supérieure
-    Sinon
-        retourner Recherche(noeud.FilsDroit, valeur)
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~ Insertion dans un ABR :
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#noeud = (x, FilsGauche, FilsDroit)
-insertion(noeud, valeur)
-    Si noeud est vide
-        retourner valeur
-    Sinon Si valeur < noeud.valeur
-        retourner (noeud.valeur, insertion(noeud.FilsGauche, valeur), noeud.FilsDroit)
-    Sinon
-        retourner (noeud.valeur, noeud.FilsGauche, insertion(noeud.FilsDroit, valeur))
-
-
-
-
-
-    
-"""
 
 # =============================================================================
 #  Question 1 : Classe 'Node'
@@ -61,11 +56,18 @@ insertion(noeud, valeur)
 
 
 class Node:
+    """
+    Un noeud est composé de deux fils et d'une valeur
+    """
 
     def __init__(self, data):
+        """
+        Initialisation de la classe Node
+        """
         self.data = data
         self.leftChild = None
         self.rightChild = None
+
 
 
     def __list__(self):
@@ -87,6 +89,10 @@ class Node:
 # =============================================================================
    
     def existe(self, data, compteur = 1): 
+        """
+        Parcours de l'arbre pour vérifier si une valeur existe
+        Retourne de booleen de verification et le compteur d'itérations
+        """
         
         if self.data == data:
             return {"Existe" : True, "NbIterations" : compteur}
@@ -117,6 +123,9 @@ class Node:
     
 
     def insert(self, node):
+        """
+        Parcours tout l'arbre et ajoute une feuille Node avec la valeur
+        """
         
         #si l'arbre est vide
         if self is None: 
@@ -203,8 +212,15 @@ def existe(liste, valeur):
 # =============================================================================
 
 class ABR:
+    """
+    Un ABR est un Arbre Bianire de Recherche
+    """
     
     def __init__(self, listeData):
+        """
+        Initialisattion de l'abr avec une liste de variables
+        """
+        
         
         #si il 
         if listeData == []:
@@ -226,7 +242,10 @@ class ABR:
 
         
    
-    def afficherValeurs(self, niveau = 0):       
+    def afficherValeurs(self, niveau = 0): 
+        """
+        affiche dans la console toutes les valeurs de l'arbre dans un ordre trié
+        """
         
         if not self is None:
             
@@ -238,28 +257,7 @@ class ABR:
             if not self.rightChild.value == None:
                 self.rightChild.afficherValeurs(niveau + 1)
 
-
-    def listeValeurs(self, niveau = 0, liste = []):       
-        
-        """
-        Retourne la liste des valeurs triées en parcourant l'arbre en profondeur
-        Chaque tuple de la liste contient :
-            - element 1 : valeur
-            - element 2 : position
-        """
-        
-        if not self.leftChild.value == None:
-            self.leftChild.listeValeurs(niveau + 1)
-            
-        liste.append((self.value, niveau))
-        
-        if not self.rightChild.value == None:
-            self.rightChild.listeValeurs(niveau + 1)
-        
-        return(liste)
-
-
-                             
+                     
         
     def diviserListeTo2ABR(self):
         """
@@ -281,9 +279,126 @@ class ABR:
         return ABR(listLeft), ABR(listRight)
 
 
+    
+# =============================================================================
+#     Question 6 :Insertion de valeurs numériques
+# =============================================================================
+    
+    def add_node(self, abr):
+        """
+        Parcours tout l'arbre et ajoute une feuille avec la valeur
+        """
+        
+        #si l'arbre est vide
+        if self.value is None: 
+            self = abr.value
+        
+        #sinon si l'arbre existe
+        else:
+            
+            #si la valeur du noeud est sup
+            if self.value < abr.value:
+                
+                #si le rightChild est nul
+                if self.rightChild is None: 
+                    self.rightChild = abr
+                    
+                #else récursivité
+                else: 
+                    self.rightChild.add_node(abr)
+                    
+            #si la valeur du noeud est inf
+            elif self.value > abr.value: 
+                
+                #si le rightChild est nul
+                if self.leftChild is None: 
+                    self.leftChild = abr 
+                    
+                #else récursivité
+                else: 
+                    self.leftChild.add_node(abr) 
 
 
 
+# =============================================================================
+# Question 7 : Liste des valeurs de l'abr triées
+# =============================================================================
+                    
+
+    def listeValeurs(self, niveau = 0, liste = []):       
+        
+        """
+        Retourne la liste des valeurs triées en parcourant l'arbre en profondeur
+        Chaque tuple de la liste contient :
+            - element 1 : valeur
+            - element 2 : position
+        """
+        
+        if not self.leftChild.value == None:
+            self.leftChild.listeValeurs(niveau + 1)
+            
+        liste.append((self.value, niveau))
+        
+        if not self.rightChild.value == None:
+            self.rightChild.listeValeurs(niveau + 1)
+        
+        return(liste)
+        
+        
+    def balance(self):
+        
+        """
+        Prend la liste de valeurs triées et en fait un abr
+        """
+        
+        return ABR([element[0] for element in self.listeValeurs()])
+        
+        
+        
+# =============================================================================
+# Question 8 : Manipulation de listes d'étiquettes        
+# =============================================================================
+        
+        
+    def __eq__(self, other):
+        """
+        Retourne un booléen qui permet de savoir si deux valeurs de noeuds sont égales
+        """
+        return self.value == other.value
+        
+    def __lt__(self, other):
+        """
+        Retourne un booléen qui permet de savoir si deux valeurs de noeuds sont égales
+        """
+        return self.value < other.value
+
+
+
+
+# =============================================================================
+# Question 8 : Rotation de noeud
+# =============================================================================
+
+    def leftFlip(self): 
+        """
+        un left flip retourne un nouvel arbre avec un changement de noeud
+        """
+          
+        if self.value is None: 
+            return self.value  
+          
+        if self.leftChild is None and self.rightChild is None: 
+            return self 
+      
+        flippedRoot = self.leftFlip() 
+      
+        self.leftChild.leftChild = self.rightChild 
+        self.leftChild.rightChild = self 
+        self.leftChild = None 
+        self.rightChild = None
+      
+        return flippedRoot 
+    
 
 # =============================================================================
 # Question 2 : Implémentation de valeurs numériques
@@ -357,8 +472,8 @@ print(abrEq.value)
 #abrEq.afficherValeurs()
 print(abrEq.listeValeurs())
 
-
-
+abrEq.add_node(ABR([5]))
+help(ABR([]).add_node)
 
 
 
