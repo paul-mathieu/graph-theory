@@ -143,7 +143,8 @@ test7 = 'stat r1 intersect r2 contains Trump and contains Clinton'
 
 #Tests du lexer
 
-lex.input(test4)
+data = test2
+lex.input(data)
 
 while True:
     tok = lex.token() #lecture du prochain token ou none
@@ -151,7 +152,7 @@ while True:
 
     print(tok.type + " - " + tok.value)
 
-
+print('~#~ ' * 10)
 
 
 
