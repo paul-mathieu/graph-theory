@@ -48,12 +48,21 @@ Manipulation de données
 '''
 
 import ply.yacc as yacc
+import TP4_Langages_Lexique
+
 
 
 # =============================================================================
 # Parser
 # =============================================================================
-    
+
+def p_assign(p):
+    '''assign : NAME EQUALS expr'''
+
+def p_get(p):
+    '''get : GET URL'''
+
+   
 #
 #
 #def p_assign(p):
