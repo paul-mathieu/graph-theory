@@ -3,402 +3,237 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     DIFF
-    EQUALS
     INTERSECT
     STAT
     UNION
 
 Grammar
 
-Rule 0     S' -> get
-Rule 1     get -> GET URL
-Rule 2     get -> GET URL contrainte
-Rule 3     get -> GET URL contrainte_liee
-Rule 4     contrainte -> CONTAINS NAME
-Rule 5     contrainte -> EXCLUDES NAME
-Rule 6     contrainte_liee -> contrainte AND contrainte
-Rule 7     contrainte_liee -> contrainte AND contrainte_liee
-Rule 8     contrainte_liee -> contrainte OR contrainte
-Rule 9     contrainte_liee -> contrainte OR contrainte_liee
-Rule 10    contrainte_liee -> contrainte_liee AND contrainte
-Rule 11    contrainte_liee -> contrainte_liee AND contrainte_liee
-Rule 12    contrainte_liee -> contrainte_liee OR contrainte
-Rule 13    contrainte_liee -> contrainte_liee OR contrainte_liee
+Rule 0     S' -> defaut
+Rule 1     defaut -> assign
+Rule 2     defaut -> get
+Rule 3     assign -> NAME EQUALS get
+Rule 4     get -> GET URL
+Rule 5     get -> GET URL contrainte_liee
+Rule 6     get -> GET URL contrainte
+Rule 7     contrainte_liee -> contrainte_liee AND contrainte
+Rule 8     contrainte_liee -> contrainte_liee OR contrainte
+Rule 9     contrainte_liee -> contrainte
+Rule 10    contrainte -> CONTAINS NAME
+Rule 11    contrainte -> EXCLUDES NAME
 
 Terminals, with rules where they appear
 
-AND                  : 6 7 10 11
-CONTAINS             : 4
+AND                  : 7
+CONTAINS             : 10
 DIFF                 : 
-EQUALS               : 
-EXCLUDES             : 5
-GET                  : 1 2 3
+EQUALS               : 3
+EXCLUDES             : 11
+GET                  : 4 5 6
 INTERSECT            : 
-NAME                 : 4 5
-OR                   : 8 9 12 13
+NAME                 : 3 10 11
+OR                   : 8
 STAT                 : 
 UNION                : 
-URL                  : 1 2 3
+URL                  : 4 5 6
 error                : 
 
 Nonterminals, with rules where they appear
 
-contrainte           : 2 6 6 7 8 8 9 10 12
-contrainte_liee      : 3 7 9 10 11 11 12 13 13
-get                  : 0
+assign               : 1
+contrainte           : 6 7 8 9
+contrainte_liee      : 5 7 8
+defaut               : 0
+get                  : 2 3
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . get
-    (1) get -> . GET URL
-    (2) get -> . GET URL contrainte
-    (3) get -> . GET URL contrainte_liee
+    (0) S' -> . defaut
+    (1) defaut -> . assign
+    (2) defaut -> . get
+    (3) assign -> . NAME EQUALS get
+    (4) get -> . GET URL
+    (5) get -> . GET URL contrainte_liee
+    (6) get -> . GET URL contrainte
 
-    GET             shift and go to state 2
+    NAME            shift and go to state 4
+    GET             shift and go to state 5
 
-    get                            shift and go to state 1
+    defaut                         shift and go to state 1
+    assign                         shift and go to state 2
+    get                            shift and go to state 3
 
 state 1
 
-    (0) S' -> get .
+    (0) S' -> defaut .
 
 
 
 state 2
 
-    (1) get -> GET . URL
-    (2) get -> GET . URL contrainte
-    (3) get -> GET . URL contrainte_liee
+    (1) defaut -> assign .
 
-    URL             shift and go to state 3
+    $end            reduce using rule 1 (defaut -> assign .)
 
 
 state 3
 
-    (1) get -> GET URL .
-    (2) get -> GET URL . contrainte
-    (3) get -> GET URL . contrainte_liee
-    (4) contrainte -> . CONTAINS NAME
-    (5) contrainte -> . EXCLUDES NAME
-    (6) contrainte_liee -> . contrainte AND contrainte
-    (7) contrainte_liee -> . contrainte AND contrainte_liee
-    (8) contrainte_liee -> . contrainte OR contrainte
-    (9) contrainte_liee -> . contrainte OR contrainte_liee
-    (10) contrainte_liee -> . contrainte_liee AND contrainte
-    (11) contrainte_liee -> . contrainte_liee AND contrainte_liee
-    (12) contrainte_liee -> . contrainte_liee OR contrainte
-    (13) contrainte_liee -> . contrainte_liee OR contrainte_liee
+    (2) defaut -> get .
 
-    $end            reduce using rule 1 (get -> GET URL .)
-    CONTAINS        shift and go to state 6
-    EXCLUDES        shift and go to state 7
+    $end            reduce using rule 2 (defaut -> get .)
 
-    contrainte                     shift and go to state 4
-    contrainte_liee                shift and go to state 5
 
 state 4
 
-    (2) get -> GET URL contrainte .
-    (6) contrainte_liee -> contrainte . AND contrainte
-    (7) contrainte_liee -> contrainte . AND contrainte_liee
-    (8) contrainte_liee -> contrainte . OR contrainte
-    (9) contrainte_liee -> contrainte . OR contrainte_liee
+    (3) assign -> NAME . EQUALS get
 
-    $end            reduce using rule 2 (get -> GET URL contrainte .)
-    AND             shift and go to state 8
-    OR              shift and go to state 9
+    EQUALS          shift and go to state 6
 
 
 state 5
 
-    (3) get -> GET URL contrainte_liee .
-    (10) contrainte_liee -> contrainte_liee . AND contrainte
-    (11) contrainte_liee -> contrainte_liee . AND contrainte_liee
-    (12) contrainte_liee -> contrainte_liee . OR contrainte
-    (13) contrainte_liee -> contrainte_liee . OR contrainte_liee
+    (4) get -> GET . URL
+    (5) get -> GET . URL contrainte_liee
+    (6) get -> GET . URL contrainte
 
-    $end            reduce using rule 3 (get -> GET URL contrainte_liee .)
-    AND             shift and go to state 10
-    OR              shift and go to state 11
+    URL             shift and go to state 7
 
 
 state 6
 
-    (4) contrainte -> CONTAINS . NAME
+    (3) assign -> NAME EQUALS . get
+    (4) get -> . GET URL
+    (5) get -> . GET URL contrainte_liee
+    (6) get -> . GET URL contrainte
 
-    NAME            shift and go to state 12
+    GET             shift and go to state 5
 
+    get                            shift and go to state 8
 
 state 7
 
-    (5) contrainte -> EXCLUDES . NAME
+    (4) get -> GET URL .
+    (5) get -> GET URL . contrainte_liee
+    (6) get -> GET URL . contrainte
+    (7) contrainte_liee -> . contrainte_liee AND contrainte
+    (8) contrainte_liee -> . contrainte_liee OR contrainte
+    (9) contrainte_liee -> . contrainte
+    (10) contrainte -> . CONTAINS NAME
+    (11) contrainte -> . EXCLUDES NAME
 
-    NAME            shift and go to state 13
+    $end            reduce using rule 4 (get -> GET URL .)
+    CONTAINS        shift and go to state 11
+    EXCLUDES        shift and go to state 12
 
+    contrainte_liee                shift and go to state 9
+    contrainte                     shift and go to state 10
 
 state 8
 
-    (6) contrainte_liee -> contrainte AND . contrainte
-    (7) contrainte_liee -> contrainte AND . contrainte_liee
-    (4) contrainte -> . CONTAINS NAME
-    (5) contrainte -> . EXCLUDES NAME
-    (6) contrainte_liee -> . contrainte AND contrainte
-    (7) contrainte_liee -> . contrainte AND contrainte_liee
-    (8) contrainte_liee -> . contrainte OR contrainte
-    (9) contrainte_liee -> . contrainte OR contrainte_liee
-    (10) contrainte_liee -> . contrainte_liee AND contrainte
-    (11) contrainte_liee -> . contrainte_liee AND contrainte_liee
-    (12) contrainte_liee -> . contrainte_liee OR contrainte
-    (13) contrainte_liee -> . contrainte_liee OR contrainte_liee
+    (3) assign -> NAME EQUALS get .
 
-    CONTAINS        shift and go to state 6
-    EXCLUDES        shift and go to state 7
+    $end            reduce using rule 3 (assign -> NAME EQUALS get .)
 
-    contrainte                     shift and go to state 14
-    contrainte_liee                shift and go to state 15
 
 state 9
 
-    (8) contrainte_liee -> contrainte OR . contrainte
-    (9) contrainte_liee -> contrainte OR . contrainte_liee
-    (4) contrainte -> . CONTAINS NAME
-    (5) contrainte -> . EXCLUDES NAME
-    (6) contrainte_liee -> . contrainte AND contrainte
-    (7) contrainte_liee -> . contrainte AND contrainte_liee
-    (8) contrainte_liee -> . contrainte OR contrainte
-    (9) contrainte_liee -> . contrainte OR contrainte_liee
-    (10) contrainte_liee -> . contrainte_liee AND contrainte
-    (11) contrainte_liee -> . contrainte_liee AND contrainte_liee
-    (12) contrainte_liee -> . contrainte_liee OR contrainte
-    (13) contrainte_liee -> . contrainte_liee OR contrainte_liee
+    (5) get -> GET URL contrainte_liee .
+    (7) contrainte_liee -> contrainte_liee . AND contrainte
+    (8) contrainte_liee -> contrainte_liee . OR contrainte
 
-    CONTAINS        shift and go to state 6
-    EXCLUDES        shift and go to state 7
+    $end            reduce using rule 5 (get -> GET URL contrainte_liee .)
+    AND             shift and go to state 13
+    OR              shift and go to state 14
 
-    contrainte                     shift and go to state 16
-    contrainte_liee                shift and go to state 17
 
 state 10
 
-    (10) contrainte_liee -> contrainte_liee AND . contrainte
-    (11) contrainte_liee -> contrainte_liee AND . contrainte_liee
-    (4) contrainte -> . CONTAINS NAME
-    (5) contrainte -> . EXCLUDES NAME
-    (6) contrainte_liee -> . contrainte AND contrainte
-    (7) contrainte_liee -> . contrainte AND contrainte_liee
-    (8) contrainte_liee -> . contrainte OR contrainte
-    (9) contrainte_liee -> . contrainte OR contrainte_liee
-    (10) contrainte_liee -> . contrainte_liee AND contrainte
-    (11) contrainte_liee -> . contrainte_liee AND contrainte_liee
-    (12) contrainte_liee -> . contrainte_liee OR contrainte
-    (13) contrainte_liee -> . contrainte_liee OR contrainte_liee
+    (6) get -> GET URL contrainte .
+    (9) contrainte_liee -> contrainte .
 
-    CONTAINS        shift and go to state 6
-    EXCLUDES        shift and go to state 7
+  ! reduce/reduce conflict for $end resolved using rule 6 (get -> GET URL contrainte .)
+    $end            reduce using rule 6 (get -> GET URL contrainte .)
+    AND             reduce using rule 9 (contrainte_liee -> contrainte .)
+    OR              reduce using rule 9 (contrainte_liee -> contrainte .)
 
-    contrainte_liee                shift and go to state 18
-    contrainte                     shift and go to state 19
+  ! $end            [ reduce using rule 9 (contrainte_liee -> contrainte .) ]
+
 
 state 11
 
-    (12) contrainte_liee -> contrainte_liee OR . contrainte
-    (13) contrainte_liee -> contrainte_liee OR . contrainte_liee
-    (4) contrainte -> . CONTAINS NAME
-    (5) contrainte -> . EXCLUDES NAME
-    (6) contrainte_liee -> . contrainte AND contrainte
-    (7) contrainte_liee -> . contrainte AND contrainte_liee
-    (8) contrainte_liee -> . contrainte OR contrainte
-    (9) contrainte_liee -> . contrainte OR contrainte_liee
-    (10) contrainte_liee -> . contrainte_liee AND contrainte
-    (11) contrainte_liee -> . contrainte_liee AND contrainte_liee
-    (12) contrainte_liee -> . contrainte_liee OR contrainte
-    (13) contrainte_liee -> . contrainte_liee OR contrainte_liee
+    (10) contrainte -> CONTAINS . NAME
 
-    CONTAINS        shift and go to state 6
-    EXCLUDES        shift and go to state 7
+    NAME            shift and go to state 15
 
-    contrainte_liee                shift and go to state 20
-    contrainte                     shift and go to state 21
 
 state 12
 
-    (4) contrainte -> CONTAINS NAME .
+    (11) contrainte -> EXCLUDES . NAME
 
-    AND             reduce using rule 4 (contrainte -> CONTAINS NAME .)
-    OR              reduce using rule 4 (contrainte -> CONTAINS NAME .)
-    $end            reduce using rule 4 (contrainte -> CONTAINS NAME .)
+    NAME            shift and go to state 16
 
 
 state 13
 
-    (5) contrainte -> EXCLUDES NAME .
+    (7) contrainte_liee -> contrainte_liee AND . contrainte
+    (10) contrainte -> . CONTAINS NAME
+    (11) contrainte -> . EXCLUDES NAME
 
-    AND             reduce using rule 5 (contrainte -> EXCLUDES NAME .)
-    OR              reduce using rule 5 (contrainte -> EXCLUDES NAME .)
-    $end            reduce using rule 5 (contrainte -> EXCLUDES NAME .)
+    CONTAINS        shift and go to state 11
+    EXCLUDES        shift and go to state 12
 
+    contrainte                     shift and go to state 17
 
 state 14
 
-    (6) contrainte_liee -> contrainte AND contrainte .
-    (6) contrainte_liee -> contrainte . AND contrainte
-    (7) contrainte_liee -> contrainte . AND contrainte_liee
-    (8) contrainte_liee -> contrainte . OR contrainte
-    (9) contrainte_liee -> contrainte . OR contrainte_liee
+    (8) contrainte_liee -> contrainte_liee OR . contrainte
+    (10) contrainte -> . CONTAINS NAME
+    (11) contrainte -> . EXCLUDES NAME
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    $end            reduce using rule 6 (contrainte_liee -> contrainte AND contrainte .)
-    AND             shift and go to state 8
-    OR              shift and go to state 9
+    CONTAINS        shift and go to state 11
+    EXCLUDES        shift and go to state 12
 
-  ! AND             [ reduce using rule 6 (contrainte_liee -> contrainte AND contrainte .) ]
-  ! OR              [ reduce using rule 6 (contrainte_liee -> contrainte AND contrainte .) ]
-
+    contrainte                     shift and go to state 18
 
 state 15
 
-    (7) contrainte_liee -> contrainte AND contrainte_liee .
-    (10) contrainte_liee -> contrainte_liee . AND contrainte
-    (11) contrainte_liee -> contrainte_liee . AND contrainte_liee
-    (12) contrainte_liee -> contrainte_liee . OR contrainte
-    (13) contrainte_liee -> contrainte_liee . OR contrainte_liee
+    (10) contrainte -> CONTAINS NAME .
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    $end            reduce using rule 7 (contrainte_liee -> contrainte AND contrainte_liee .)
-    AND             shift and go to state 10
-    OR              shift and go to state 11
-
-  ! AND             [ reduce using rule 7 (contrainte_liee -> contrainte AND contrainte_liee .) ]
-  ! OR              [ reduce using rule 7 (contrainte_liee -> contrainte AND contrainte_liee .) ]
+    $end            reduce using rule 10 (contrainte -> CONTAINS NAME .)
+    AND             reduce using rule 10 (contrainte -> CONTAINS NAME .)
+    OR              reduce using rule 10 (contrainte -> CONTAINS NAME .)
 
 
 state 16
 
-    (8) contrainte_liee -> contrainte OR contrainte .
-    (6) contrainte_liee -> contrainte . AND contrainte
-    (7) contrainte_liee -> contrainte . AND contrainte_liee
-    (8) contrainte_liee -> contrainte . OR contrainte
-    (9) contrainte_liee -> contrainte . OR contrainte_liee
+    (11) contrainte -> EXCLUDES NAME .
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    $end            reduce using rule 8 (contrainte_liee -> contrainte OR contrainte .)
-    AND             shift and go to state 8
-    OR              shift and go to state 9
-
-  ! AND             [ reduce using rule 8 (contrainte_liee -> contrainte OR contrainte .) ]
-  ! OR              [ reduce using rule 8 (contrainte_liee -> contrainte OR contrainte .) ]
+    $end            reduce using rule 11 (contrainte -> EXCLUDES NAME .)
+    AND             reduce using rule 11 (contrainte -> EXCLUDES NAME .)
+    OR              reduce using rule 11 (contrainte -> EXCLUDES NAME .)
 
 
 state 17
 
-    (9) contrainte_liee -> contrainte OR contrainte_liee .
-    (10) contrainte_liee -> contrainte_liee . AND contrainte
-    (11) contrainte_liee -> contrainte_liee . AND contrainte_liee
-    (12) contrainte_liee -> contrainte_liee . OR contrainte
-    (13) contrainte_liee -> contrainte_liee . OR contrainte_liee
+    (7) contrainte_liee -> contrainte_liee AND contrainte .
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    $end            reduce using rule 9 (contrainte_liee -> contrainte OR contrainte_liee .)
-    AND             shift and go to state 10
-    OR              shift and go to state 11
-
-  ! AND             [ reduce using rule 9 (contrainte_liee -> contrainte OR contrainte_liee .) ]
-  ! OR              [ reduce using rule 9 (contrainte_liee -> contrainte OR contrainte_liee .) ]
+    AND             reduce using rule 7 (contrainte_liee -> contrainte_liee AND contrainte .)
+    OR              reduce using rule 7 (contrainte_liee -> contrainte_liee AND contrainte .)
+    $end            reduce using rule 7 (contrainte_liee -> contrainte_liee AND contrainte .)
 
 
 state 18
 
-    (11) contrainte_liee -> contrainte_liee AND contrainte_liee .
-    (10) contrainte_liee -> contrainte_liee . AND contrainte
-    (11) contrainte_liee -> contrainte_liee . AND contrainte_liee
-    (12) contrainte_liee -> contrainte_liee . OR contrainte
-    (13) contrainte_liee -> contrainte_liee . OR contrainte_liee
+    (8) contrainte_liee -> contrainte_liee OR contrainte .
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    $end            reduce using rule 11 (contrainte_liee -> contrainte_liee AND contrainte_liee .)
-    AND             shift and go to state 10
-    OR              shift and go to state 11
-
-  ! AND             [ reduce using rule 11 (contrainte_liee -> contrainte_liee AND contrainte_liee .) ]
-  ! OR              [ reduce using rule 11 (contrainte_liee -> contrainte_liee AND contrainte_liee .) ]
-
-
-state 19
-
-    (10) contrainte_liee -> contrainte_liee AND contrainte .
-    (6) contrainte_liee -> contrainte . AND contrainte
-    (7) contrainte_liee -> contrainte . AND contrainte_liee
-    (8) contrainte_liee -> contrainte . OR contrainte
-    (9) contrainte_liee -> contrainte . OR contrainte_liee
-
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    $end            reduce using rule 10 (contrainte_liee -> contrainte_liee AND contrainte .)
-    AND             shift and go to state 8
-    OR              shift and go to state 9
-
-  ! AND             [ reduce using rule 10 (contrainte_liee -> contrainte_liee AND contrainte .) ]
-  ! OR              [ reduce using rule 10 (contrainte_liee -> contrainte_liee AND contrainte .) ]
-
-
-state 20
-
-    (13) contrainte_liee -> contrainte_liee OR contrainte_liee .
-    (10) contrainte_liee -> contrainte_liee . AND contrainte
-    (11) contrainte_liee -> contrainte_liee . AND contrainte_liee
-    (12) contrainte_liee -> contrainte_liee . OR contrainte
-    (13) contrainte_liee -> contrainte_liee . OR contrainte_liee
-
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    $end            reduce using rule 13 (contrainte_liee -> contrainte_liee OR contrainte_liee .)
-    AND             shift and go to state 10
-    OR              shift and go to state 11
-
-  ! AND             [ reduce using rule 13 (contrainte_liee -> contrainte_liee OR contrainte_liee .) ]
-  ! OR              [ reduce using rule 13 (contrainte_liee -> contrainte_liee OR contrainte_liee .) ]
-
-
-state 21
-
-    (12) contrainte_liee -> contrainte_liee OR contrainte .
-    (6) contrainte_liee -> contrainte . AND contrainte
-    (7) contrainte_liee -> contrainte . AND contrainte_liee
-    (8) contrainte_liee -> contrainte . OR contrainte
-    (9) contrainte_liee -> contrainte . OR contrainte_liee
-
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    $end            reduce using rule 12 (contrainte_liee -> contrainte_liee OR contrainte .)
-    AND             shift and go to state 8
-    OR              shift and go to state 9
-
-  ! AND             [ reduce using rule 12 (contrainte_liee -> contrainte_liee OR contrainte .) ]
-  ! OR              [ reduce using rule 12 (contrainte_liee -> contrainte_liee OR contrainte .) ]
+    AND             reduce using rule 8 (contrainte_liee -> contrainte_liee OR contrainte .)
+    OR              reduce using rule 8 (contrainte_liee -> contrainte_liee OR contrainte .)
+    $end            reduce using rule 8 (contrainte_liee -> contrainte_liee OR contrainte .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for AND in state 14 resolved as shift
-WARNING: shift/reduce conflict for OR in state 14 resolved as shift
-WARNING: shift/reduce conflict for AND in state 15 resolved as shift
-WARNING: shift/reduce conflict for OR in state 15 resolved as shift
-WARNING: shift/reduce conflict for AND in state 16 resolved as shift
-WARNING: shift/reduce conflict for OR in state 16 resolved as shift
-WARNING: shift/reduce conflict for AND in state 17 resolved as shift
-WARNING: shift/reduce conflict for OR in state 17 resolved as shift
-WARNING: shift/reduce conflict for AND in state 18 resolved as shift
-WARNING: shift/reduce conflict for OR in state 18 resolved as shift
-WARNING: shift/reduce conflict for AND in state 19 resolved as shift
-WARNING: shift/reduce conflict for OR in state 19 resolved as shift
-WARNING: shift/reduce conflict for AND in state 20 resolved as shift
-WARNING: shift/reduce conflict for OR in state 20 resolved as shift
-WARNING: shift/reduce conflict for AND in state 21 resolved as shift
-WARNING: shift/reduce conflict for OR in state 21 resolved as shift
+WARNING: reduce/reduce conflict in state 10 resolved using rule (get -> GET URL contrainte)
+WARNING: rejected rule (contrainte_liee -> contrainte) in state 10
