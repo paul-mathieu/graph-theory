@@ -53,35 +53,103 @@ import ply.lex as lex
 # Lexer
 # =============================================================================
 
-tokens = ['GET', 
-          'CONTAINS', 'EXCLUDES', 'AND', 'OR', 'STAT', 'UNION', 'INTERSECT', 'DIFF', 
-          'NAME', 'VARIABLE', 
-          'URL']
+tokens = ['GET', 'URL',
+          'EQUALS',
+          'CONTAINS', 'EXCLUDES', 
+          'AND', 'OR', 
+          'STAT', 
+          'UNION', 'INTERSECT', 'DIFF',
+          'NAME']
 
 t_ignore = ' \t'
 
-t_GET = r'get'
-t_CONTAINS = r'contains'
-t_EXCLUDES = r'excludes'
-t_AND = r'and'
-t_OR = r'or'
-t_STAT = r'stat'
-t_UNION = r'union'
-t_INTERSECT = r'intersect'
-t_DIFF = r'diff'
+reserved = {'get' : 'GET',
+            'contains' : 'CONTAINS',
+            'excludes' : 'EXCLUDES',
+            'and' : 'AND',
+            'or' : 'OR',
+            'stat' : 'STAT',
+            'union' : 'UNION',
+            'intersect' : 'INTERSECT',
+            'diff' : 'DIFF'}
 
-t_NAME = r'[\w\-\.~:\\\/?#\[\]!\$&\+,=.]+'
-t_VARIABLE = r'[\w\-\.~:\\\/?#\[\]!\$&\+,=.]+'
 
-t_URL = r'(?:http(s)?:\/\/)?[\w-]+(\.[\w-]+)+(\/[\w\-\.~:\/?#\[\]!\$&\+,=.]+)?'
+
+#t_GET = r'get'
+#t_CONTAINS = r'contains'
+#t_EXCLUDES = r'excludes'
+#t_AND = r'and'
+#t_OR = r'or'
+#t_STAT = r'stat'
+#t_UNION = r'union'
+#t_INTERSECT = r'intersect'
+#t_DIFF = r'diff'
+
+def t_EQUALS(t):
+    r'='
+    return t
+
+def t_URL(t):
+    r'(?:http(s)?:\/\/)?[\w-]+(\.[\w-]+)+(\/[\w\-\.~:\/?#\[\]!\$&\+,=.]+)?'
+    return t
+
+#def t_VARIABLE(t):
+#    r'[\w^0-9][\w]*'
+##    r'[a-z][0-9]*'
+#    return t
+
+def t_NAME(t):
+    r'[\w^0-9][\w]*'
+#    print(t.type)
+    t.type = reserved.get(t.value, 'NAME')
+    return t
+
+
+    
 
 def t_error(t):
-    t.type = t.value[0]
-    t.value = t.value[0]
-    t.lexer.skip(1)
+    print("Lex error " + t.value)
     return t
 
 lex.lex() #Build the lexer
+
+
+
+
+# =============================================================================
+# Variables de test
+# =============================================================================
+
+#Programme Idule initial :
+test0 = 'get http://www.machin-truc.org/page.html'
+ 
+#Programme Idule initial avec contrainte :
+test1 = 'get http://www.machin-truc.org/page.html contains toto'
+
+#Programme Idule initial avec groupe de contraintes :
+test2 = 'get http://www.machin-truc.org/page.html contains toto and exclude titi or contains blabla'
+test3 = 'get http://www.bidule.org/page.html contains bli or contains blu and exclude blo'
+
+#Programme Idule initial avec stats :
+test4 = 'r1 = get http://www.machin-truc.org/page.html contains toto and exclude titi or contains blabla'
+test5 = 'r2 = get http://www.bidule.org/page.html contains bli or contains blu and exclude blo'
+test6 = 'stat r1 union r2 contains Trump and exclude Clinton contains Clinton and exclude Trump contains Trump and contains Clinton'
+test7 = 'stat r1 intersect r2 contains Trump and contains Clinton'
+
+
+# =============================================================================
+# Tests
+# =============================================================================
+
+#Tests du lexer
+
+lex.input(test4)
+
+while True:
+    tok = lex.token() #lecture du prochain token ou none
+    if not tok: break
+
+    print(tok.type + " - " + tok.value)
 
 
 
