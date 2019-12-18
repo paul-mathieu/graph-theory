@@ -61,29 +61,30 @@ tokens = TP4_Langages_Lexique.tokens
 #def p_assign(p):
 #    '''assign : NAME EQUALS'''
 
+def p_defaut(p):
+    '''defaut : assign
+    | get'''
+    
+def p_assign(p):
+    '''assign : NAME EQUALS get'''
+    
 def p_get(p):
     '''get : GET URL 
-    | GET URL contrainte
     | GET URL contrainte_liee
-    '''
+    | GET URL contrainte'''
     print('get')
+    
+def p_contrainte_liee(p):
+    '''contrainte_liee : contrainte_liee AND contrainte 
+    | contrainte_liee OR contrainte
+    | contrainte'''
+    print('contrainte_liee')
     
 def p_contrainte(p):
     '''contrainte : CONTAINS NAME
-    | EXCLUDES NAME
-    '''
+    | EXCLUDES NAME'''
     print('contrainte')
 
-def p_contrainte_liee(p):
-    '''contrainte_liee : contrainte AND contrainte 
-    | contrainte AND contrainte_liee 
-    | contrainte OR contrainte 
-    | contrainte OR contrainte_liee 
-    | contrainte_liee AND contrainte 
-    | contrainte_liee AND contrainte_liee 
-    | contrainte_liee OR contrainte 
-    | contrainte_liee OR contrainte_liee'''
-    print('contrainte_liee')
 
 #def p_error(p):
 #    pass
