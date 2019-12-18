@@ -47,7 +47,10 @@ Manipulation de données
 
 '''
 
-import 
+from TP4_Langages_Grammaire import *
+from TP4_Langages_Lexique import *
+
+
 # =============================================================================
 # Creation des variables de tests
 # =============================================================================
