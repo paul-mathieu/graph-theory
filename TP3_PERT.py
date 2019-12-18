@@ -8,7 +8,7 @@ Created on Wed Dec 11 16:59:27 2019
 
 class Etape:
     """
-    
+    Classe Etapes (noeuds du graph)
     """
     
     def __init__(self, number, au_plus_tot, au_plus_tard, taches = []):
@@ -161,7 +161,7 @@ class Etape:
 # Question 4.2) compute_au_plus_tard
 # =============================================================================
 
-    def compute_au_plus_tard():
+    def compute_au_plus_tard(self, etape0, compteur_au_plus_tard = None):
         """
         Prend en parametre la racine diagramme pert
         Calcul toutes les valeurs au_plus_tart
@@ -171,14 +171,34 @@ class Etape:
         
         La valeur gardee est la plus petite
         """
-        pass
-
+        
+        if compteur_au_plus_tard == None:
+            compteur_au_plus_tard = self.get_au_plus_tot()
+#            self.set_au_plus_tard(compteur_au_plus_tard)
+            
+        if self.get_au_plus_tard() in [0, None] or self.get_au_plus_tard() > compteur_au_plus_tard:
+            
+            self.set_au_plus_tard(compteur_au_plus_tard)
+            print(compteur_au_plus_tard)
+                
+                    
+        for tache in etape0.get_previous_taches(self):
+            
+            compteur_au_plus_tard -= tache.duration
+            
+            etape_precedente = tache.get_begin_step(etape0)
+            etape_precedente.compute_au_plus_tard(etape0, compteur_au_plus_tard)
+            
+            compteur_au_plus_tard += tache.duration
 
 # =============================================================================
 # Tests
 # =============================================================================
     
     def parcourir(self, liste_passage = [], liste_numbers = []):
+        """
+        Parcours du PERT
+        """
         
         liste_numbers = [self]
         
@@ -202,7 +222,7 @@ class Etape:
 
 class Tache:
     """
-    
+    Classe Tache (arcs du graph)
     """
     
     def __init__(self, name, duration, next_step = None):
@@ -254,14 +274,6 @@ class Tache:
         """
         return self.next_step
     
-
-
-
-
-
-
-
-
 
 
 # =============================================================================
@@ -367,9 +379,9 @@ etape0.compute_au_plus_tot()
 
 #etape0.get_previous_taches(etape7)
 
-
-
-
+etape0.get_last_tache().compute_au_plus_tard(etape0)
+print(etape7.au_plus_tard)
+print(etape5.au_plus_tard)
 
 
 
