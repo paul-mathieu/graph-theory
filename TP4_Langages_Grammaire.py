@@ -84,7 +84,7 @@ def p_contrainte_liee(p):
     
 def p_contrainte(p):
     '''contrainte : CONTAINS NAME
-    | EXCLUDES NAME'''
+    | EXCLUDE NAME'''
     print('contrainte')
 
 
