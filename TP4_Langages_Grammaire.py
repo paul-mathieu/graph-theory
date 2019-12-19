@@ -64,19 +64,21 @@ tokens = TP4_Langages_Lexique.tokens
 def p_defaut(p):
     '''defaut : assign
     | get'''
+    print('defaut')
     
 def p_assign(p):
     '''assign : NAME EQUALS get'''
     
 def p_get(p):
     '''get : GET URL 
-    | GET URL contrainte_liee
-    | GET URL contrainte'''
+    | GET URL contrainte_liee'''
     print('get')
     
 def p_contrainte_liee(p):
-    '''contrainte_liee : contrainte_liee AND contrainte 
-    | contrainte_liee OR contrainte
+    '''contrainte_liee : contrainte AND contrainte_liee 
+    | contrainte OR contrainte_liee 
+    | contrainte_liee AND contrainte 
+    | contrainte_liee OR contrainte 
     | contrainte'''
     print('contrainte_liee')
     
@@ -86,43 +88,27 @@ def p_contrainte(p):
     print('contrainte')
 
 
-#def p_error(p):
-#    pass
-
-yacc.yacc() # build the parser
-
-yacc.parse(TP4_Langages_Lexique.data) 
 
 
 
 
 
 
-#
-#
 #def p_assign(p):
 #    '''assign : NAME EQUALS expr'''
-#    
+    
 #def p_expr(p):
 #    '''expr : expr PLUS term
 #    | expr MINUS term
 #    | term'''
-#    
+    
 #def p_term(p):
 #    '''term  : term TIMES factor
 #    | term DIVIDE factor
 #    | factor'''
-#    
+
 #def p_factor(p):
 #    '''factor : NUMBER'''
-#    
-#yacc.yacc() # build the parser
-#
-#
-#
-#data = "x = 3 * 4 + 5 * 6"
-#yacc.parse(data)
-
 
 
 # =============================================================================
@@ -150,10 +136,18 @@ test7 = 'stat r1 intersect r2 contains Trump and contains Clinton'
 # Tests
 # =============================================================================
 
-#Tests du lexer
+#Tests du parser
 
+#def p_error(p):
+#    pass
 
+data = test4
 
+print(test4)
+
+yacc.yacc() # build the parser
+
+yacc.parse(data) 
 
 
 
