@@ -65,7 +65,7 @@ t_ignore = ' \t'
 
 reserved = {'get' : 'GET',
             'contains' : 'CONTAINS',
-            'excludes' : 'EXCLUDES',
+            'exclude' : 'EXCLUDES',
             'and' : 'AND',
             'or' : 'OR',
             'stat' : 'STAT',
