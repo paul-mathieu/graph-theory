@@ -141,9 +141,9 @@ test7 = 'stat r1 intersect r2 contains Trump and contains Clinton'
 #def p_error(p):
 #    pass
 
-data = test4
+data = test5
 
-print(test4)
+print(test4, end = "\n\n")
 
 yacc.yacc() # build the parser
 
