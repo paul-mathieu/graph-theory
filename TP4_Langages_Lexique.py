@@ -55,7 +55,7 @@ import ply.lex as lex
 
 tokens = ['GET', 'URL',
           'EQUALS',
-          'CONTAINS', 'EXCLUDES', 
+          'CONTAINS', 'EXCLUDE', 
           'AND', 'OR', 
           'STAT', 
           'UNION', 'INTERSECT', 'DIFF',
@@ -143,7 +143,7 @@ test7 = 'stat r1 intersect r2 contains Trump and contains Clinton'
 
 #Tests du lexer
 
-data = test2
+data = test5
 lex.input(data)
 
 while True:
