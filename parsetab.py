@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND CONTAINS DIFF EQUALS EXCLUDES GET INTERSECT NAME OR STAT UNION URLdefaut : assign\n    | getassign : NAME EQUALS getget : GET URL \n    | GET URL contrainte_lieecontrainte_liee : contrainte AND contrainte_liee \n    | contrainte OR contrainte_liee \n    | contrainte_liee AND contrainte \n    | contrainte_liee OR contrainte \n    | contraintecontrainte : CONTAINS NAME\n    | EXCLUDES NAME'
+_lr_signature = 'AND CONTAINS DIFF EQUALS EXCLUDE GET INTERSECT NAME OR STAT UNION URLdefaut : assign\n    | getassign : NAME EQUALS getget : GET URL \n    | GET URL contrainte_lieecontrainte_liee : contrainte AND contrainte_liee \n    | contrainte OR contrainte_liee \n    | contrainte_liee AND contrainte \n    | contrainte_liee OR contrainte \n    | contraintecontrainte : CONTAINS NAME\n    | EXCLUDE NAME'
     
-_lr_action_items = {'NAME':([0,11,12,],[4,17,18,]),'GET':([0,6,],[5,5,]),'$end':([1,2,3,7,8,9,10,17,18,19,20,21,22,],[0,-1,-2,-4,-3,-5,-10,-11,-12,-8,-9,-6,-7,]),'EQUALS':([4,],[6,]),'URL':([5,],[7,]),'CONTAINS':([7,13,14,15,16,],[11,11,11,11,11,]),'EXCLUDES':([7,13,14,15,16,],[12,12,12,12,12,]),'AND':([9,10,17,18,19,20,21,22,],[13,15,-11,-12,-8,-9,13,13,]),'OR':([9,10,17,18,19,20,21,22,],[14,16,-11,-12,-8,-9,14,14,]),}
+_lr_action_items = {'NAME':([0,11,12,],[4,17,18,]),'GET':([0,6,],[5,5,]),'$end':([1,2,3,7,8,9,10,17,18,19,20,21,22,],[0,-1,-2,-4,-3,-5,-10,-11,-12,-8,-9,-6,-7,]),'EQUALS':([4,],[6,]),'URL':([5,],[7,]),'CONTAINS':([7,13,14,15,16,],[11,11,11,11,11,]),'EXCLUDE':([7,13,14,15,16,],[12,12,12,12,12,]),'AND':([9,10,17,18,19,20,21,22,],[13,15,-11,-12,-8,-9,13,13,]),'OR':([9,10,17,18,19,20,21,22,],[14,16,-11,-12,-8,-9,14,14,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -29,14 +29,14 @@ _lr_productions = [
   ("S' -> defaut","S'",1,None,None,None),
   ('defaut -> assign','defaut',1,'p_defaut','TP4_Langages_Grammaire.py',65),
   ('defaut -> get','defaut',1,'p_defaut','TP4_Langages_Grammaire.py',66),
-  ('assign -> NAME EQUALS get','assign',3,'p_assign','TP4_Langages_Grammaire.py',69),
-  ('get -> GET URL','get',2,'p_get','TP4_Langages_Grammaire.py',72),
-  ('get -> GET URL contrainte_liee','get',3,'p_get','TP4_Langages_Grammaire.py',73),
-  ('contrainte_liee -> contrainte AND contrainte_liee','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',77),
-  ('contrainte_liee -> contrainte OR contrainte_liee','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',78),
-  ('contrainte_liee -> contrainte_liee AND contrainte','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',79),
-  ('contrainte_liee -> contrainte_liee OR contrainte','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',80),
-  ('contrainte_liee -> contrainte','contrainte_liee',1,'p_contrainte_liee','TP4_Langages_Grammaire.py',81),
-  ('contrainte -> CONTAINS NAME','contrainte',2,'p_contrainte','TP4_Langages_Grammaire.py',85),
-  ('contrainte -> EXCLUDES NAME','contrainte',2,'p_contrainte','TP4_Langages_Grammaire.py',86),
+  ('assign -> NAME EQUALS get','assign',3,'p_assign','TP4_Langages_Grammaire.py',70),
+  ('get -> GET URL','get',2,'p_get','TP4_Langages_Grammaire.py',73),
+  ('get -> GET URL contrainte_liee','get',3,'p_get','TP4_Langages_Grammaire.py',74),
+  ('contrainte_liee -> contrainte AND contrainte_liee','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',78),
+  ('contrainte_liee -> contrainte OR contrainte_liee','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',79),
+  ('contrainte_liee -> contrainte_liee AND contrainte','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',80),
+  ('contrainte_liee -> contrainte_liee OR contrainte','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',81),
+  ('contrainte_liee -> contrainte','contrainte_liee',1,'p_contrainte_liee','TP4_Langages_Grammaire.py',82),
+  ('contrainte -> CONTAINS NAME','contrainte',2,'p_contrainte','TP4_Langages_Grammaire.py',86),
+  ('contrainte -> EXCLUDE NAME','contrainte',2,'p_contrainte','TP4_Langages_Grammaire.py',87),
 ]
