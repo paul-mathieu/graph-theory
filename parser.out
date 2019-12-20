@@ -15,39 +15,39 @@ Rule 2     defaut -> get
 Rule 3     assign -> NAME EQUALS get
 Rule 4     get -> GET URL
 Rule 5     get -> GET URL contrainte_liee
-Rule 6     get -> GET URL contrainte
-Rule 7     contrainte_liee -> contrainte AND contrainte_liee
-Rule 8     contrainte_liee -> contrainte OR contrainte_liee
-Rule 9     contrainte_liee -> contrainte_liee AND contrainte
-Rule 10    contrainte_liee -> contrainte_liee OR contrainte
+Rule 6     contrainte_liee -> contrainte AND contrainte_liee
+Rule 7     contrainte_liee -> contrainte OR contrainte_liee
+Rule 8     contrainte_liee -> contrainte_liee AND contrainte
+Rule 9     contrainte_liee -> contrainte_liee OR contrainte
+Rule 10    contrainte_liee -> contrainte
 Rule 11    contrainte -> CONTAINS NAME
-Rule 12    contrainte -> EXCLUDES NAME
+Rule 12    contrainte -> EXCLUDE NAME
 
 Terminals, with rules where they appear
 
-AND                  : 7 9
+AND                  : 6 8
 CONTAINS             : 11
 DIFF                 : 
 EQUALS               : 3
-EXCLUDES             : 12
-GET                  : 4 5 6
+EXCLUDE              : 12
+GET                  : 4 5
 INTERSECT            : 
 NAME                 : 3 11 12
-OR                   : 8 10
+OR                   : 7 9
 STAT                 : 
 UNION                : 
-URL                  : 4 5 6
+URL                  : 4 5
 error                : 
 
 Nonterminals, with rules where they appear
 
 assign               : 1
 contrainte           : 6 7 8 9 10
-contrainte_liee      : 5 7 8 9 10
+contrainte_liee      : 5 6 7 8 9
 defaut               : 0
 get                  : 2 3
 
-rsing method: LALR
+Parsing method: LALR
 
 state 0
 
@@ -120,11 +120,11 @@ state 7
     (9) contrainte_liee -> . contrainte_liee OR contrainte
     (10) contrainte_liee -> . contrainte
     (11) contrainte -> . CONTAINS NAME
-    (12) contrainte -> . EXCLUDES NAME
+    (12) contrainte -> . EXCLUDE NAME
 
     $end            reduce using rule 4 (get -> GET URL .)
     CONTAINS        shift and go to state 11
-    EXCLUDES        shift and go to state 12
+    EXCLUDE         shift and go to state 12
 
     contrainte_liee                shift and go to state 9
     contrainte                     shift and go to state 10
@@ -172,7 +172,7 @@ state 11
 
 state 12
 
-    (12) contrainte -> EXCLUDES . NAME
+    (12) contrainte -> EXCLUDE . NAME
 
     NAME            shift and go to state 18
 
@@ -181,10 +181,10 @@ state 13
 
     (8) contrainte_liee -> contrainte_liee AND . contrainte
     (11) contrainte -> . CONTAINS NAME
-    (12) contrainte -> . EXCLUDES NAME
+    (12) contrainte -> . EXCLUDE NAME
 
     CONTAINS        shift and go to state 11
-    EXCLUDES        shift and go to state 12
+    EXCLUDE         shift and go to state 12
 
     contrainte                     shift and go to state 19
 
@@ -192,10 +192,10 @@ state 14
 
     (9) contrainte_liee -> contrainte_liee OR . contrainte
     (11) contrainte -> . CONTAINS NAME
-    (12) contrainte -> . EXCLUDES NAME
+    (12) contrainte -> . EXCLUDE NAME
 
     CONTAINS        shift and go to state 11
-    EXCLUDES        shift and go to state 12
+    EXCLUDE         shift and go to state 12
 
     contrainte                     shift and go to state 20
 
@@ -208,10 +208,10 @@ state 15
     (9) contrainte_liee -> . contrainte_liee OR contrainte
     (10) contrainte_liee -> . contrainte
     (11) contrainte -> . CONTAINS NAME
-    (12) contrainte -> . EXCLUDES NAME
+    (12) contrainte -> . EXCLUDE NAME
 
     CONTAINS        shift and go to state 11
-    EXCLUDES        shift and go to state 12
+    EXCLUDE         shift and go to state 12
 
     contrainte                     shift and go to state 10
     contrainte_liee                shift and go to state 21
@@ -225,10 +225,10 @@ state 16
     (9) contrainte_liee -> . contrainte_liee OR contrainte
     (10) contrainte_liee -> . contrainte
     (11) contrainte -> . CONTAINS NAME
-    (12) contrainte -> . EXCLUDES NAME
+    (12) contrainte -> . EXCLUDE NAME
 
     CONTAINS        shift and go to state 11
-    EXCLUDES        shift and go to state 12
+    EXCLUDE         shift and go to state 12
 
     contrainte                     shift and go to state 10
     contrainte_liee                shift and go to state 22
@@ -244,11 +244,11 @@ state 17
 
 state 18
 
-    (12) contrainte -> EXCLUDES NAME .
+    (12) contrainte -> EXCLUDE NAME .
 
-    AND             reduce using rule 12 (contrainte -> EXCLUDES NAME .)
-    OR              reduce using rule 12 (contrainte -> EXCLUDES NAME .)
-    $end            reduce using rule 12 (contrainte -> EXCLUDES NAME .)
+    AND             reduce using rule 12 (contrainte -> EXCLUDE NAME .)
+    OR              reduce using rule 12 (contrainte -> EXCLUDE NAME .)
+    $end            reduce using rule 12 (contrainte -> EXCLUDE NAME .)
 
 
 state 19
