@@ -63,7 +63,8 @@ tokens = TP4_Langages_Lexique.tokens
 
 def p_defaut(p):
     '''defaut : assign
-    | get'''
+    | get 
+    | stat'''
     print('defaut')
     
 def p_assign(p):
@@ -73,6 +74,9 @@ def p_get(p):
     '''get : GET URL 
     | GET URL contrainte_liee'''
     print('get')
+
+def p_stat(p):
+    '''stat : STAT NAME union NAME'''
     
 def p_contrainte_liee(p):
     '''contrainte_liee : contrainte AND contrainte_liee 
