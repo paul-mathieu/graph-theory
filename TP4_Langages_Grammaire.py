@@ -65,18 +65,31 @@ def p_defaut(p):
     '''defaut : assign
     | get 
     | stat'''
-    print('defaut')
+    
+    p[0] = p[1]
+    
+    print(p[0])
+    
     
 def p_assign(p):
     '''assign : NAME EQUALS get'''
     
+    print('assign')
+    
 def p_get(p):
     '''get : GET URL 
     | GET URL contrainte_liee'''
-    print('get')
-
+    
+    
+    p[0] = file_to_list(p[2])
+    
+    print(len(p))
+    
 def p_stat(p):
-    '''stat : STAT NAME union NAME'''
+    '''stat : STAT NAME UNION NAME contrainte_liee 
+    | STAT NAME INTERSECT NAME contrainte_liee'''
+    
+    print('stat')
     
 def p_contrainte_liee(p):
     '''contrainte_liee : contrainte AND contrainte_liee 
@@ -84,19 +97,42 @@ def p_contrainte_liee(p):
     | contrainte_liee AND contrainte 
     | contrainte_liee OR contrainte 
     | contrainte'''
+    
     print('contrainte_liee')
     
 def p_contrainte(p):
     '''contrainte : CONTAINS NAME
     | EXCLUDE NAME'''
+    
     print('contrainte')
 
 
+#if there is an error
+def p_error(p):
+    
+    print('Syntax error in input !')
 
 
 
 
-
+def file_to_list(file):
+    text_file = open(file, 'r')
+    row = []
+    
+    index = 0
+    
+    row = [line for line in text_file.readlines()]
+    row = [element[0] for element in row]
+    
+    for element in row:
+        index_beg = element.index('>')
+        index_end = len(element) - element[::-1].index('>')
+        
+        row[index] = row[index][index_beg:index_end]
+        
+        index += 1
+    
+    return row
 
 #def p_assign(p):
 #    '''assign : NAME EQUALS expr'''
@@ -145,18 +181,25 @@ test7 = 'stat r1 intersect r2 contains Trump and contains Clinton'
 #def p_error(p):
 #    pass
 
-data = test5
+data = TP4_Langages_Lexique.data
 
-print(test4, end = "\n\n")
+file = 'idule_content.html'
 
-yacc.yacc() # build the parser
+print(data, end = "\n\n")
 
-yacc.parse(data) 
+parser = yacc.yacc() # build the parser
+
+yacc.parse(data)
 
 
 
-
-
+#while True:
+#    try:
+#        s = raw_input('calc > ')
+#    if not s:
+#        continue
+#    result = parser.parse(s)
+#    print(result)
 
 
 
