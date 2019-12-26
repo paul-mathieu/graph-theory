@@ -93,11 +93,6 @@ def t_URL(t):
     r'(?:http(s)?:\/\/)?[\w-]+(\.[\w-]+)+(\/[\w\-\.~:\/?#\[\]!\$&\+,=.]+)?'
     return t
 
-#def t_VARIABLE(t):
-#    r'[\w^0-9][\w]*'
-##    r'[a-z][0-9]*'
-#    return t
-
 def t_NAME(t):
     r'[\w^0-9][\w]*'
 #    print(t.type)
@@ -122,9 +117,11 @@ lex.lex() #Build the lexer
 
 #Programme Idule initial :
 test0 = 'get http://www.machin-truc.org/page.html'
+test_0 = 'get idule_content.html'
  
 #Programme Idule initial avec contrainte :
 test1 = 'get http://www.machin-truc.org/page.html contains toto'
+test_1 = 'get idule_content.html contains toto'
 
 #Programme Idule initial avec groupe de contraintes :
 test2 = 'get http://www.machin-truc.org/page.html contains toto and exclude titi or contains blabla'
@@ -143,7 +140,7 @@ test7 = 'stat r1 intersect r2 contains Trump and contains Clinton'
 
 #Tests du lexer
 
-data = test5
+data = test_0
 lex.input(data)
 
 while True:
