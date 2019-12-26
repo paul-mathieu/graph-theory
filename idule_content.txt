@@ -1,0 +1,8 @@
+ceci est une fichers de test
+Il permet de tester les programmes du tp 4
+Le contenu est le suivant
+
+Toto ne faisait pas parti de l'election americaine de 2016.
+Trump et Clinton, eux, en faisaient partis
+
+Titi parle sonvent pour dire des choses comme 'bli', 'blo' ou 'blu'
