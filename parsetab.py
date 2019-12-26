@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND CONTAINS DIFF EQUALS EXCLUDE GET INTERSECT NAME OR STAT UNION URLdefaut : assign\n    | getassign : NAME EQUALS getget : GET URL \n    | GET URL contrainte_lieecontrainte_liee : contrainte AND contrainte_liee \n    | contrainte OR contrainte_liee \n    | contrainte_liee AND contrainte \n    | contrainte_liee OR contrainte \n    | contraintecontrainte : CONTAINS NAME\n    | EXCLUDE NAME'
+_lr_signature = 'AND CONTAINS DIFF EQUALS EXCLUDE GET INTERSECT NAME OR STAT UNION URLdefaut : assign\n    | get \n    | statassign : NAME EQUALS getget : GET URL \n    | GET URL contrainte_lieestat : STAT NAME UNION NAME contrainte_liee \n    | STAT NAME INTERSECT NAME contrainte_lieecontrainte_liee : contrainte AND contrainte_liee \n    | contrainte OR contrainte_liee \n    | contrainte_liee AND contrainte \n    | contrainte_liee OR contrainte \n    | contraintecontrainte : CONTAINS NAME\n    | EXCLUDE NAME'
     
-_lr_action_items = {'NAME':([0,11,12,],[4,17,18,]),'GET':([0,6,],[5,5,]),'$end':([1,2,3,7,8,9,10,17,18,19,20,21,22,],[0,-1,-2,-4,-3,-5,-10,-11,-12,-8,-9,-6,-7,]),'EQUALS':([4,],[6,]),'URL':([5,],[7,]),'CONTAINS':([7,13,14,15,16,],[11,11,11,11,11,]),'EXCLUDE':([7,13,14,15,16,],[12,12,12,12,12,]),'AND':([9,10,17,18,19,20,21,22,],[13,15,-11,-12,-8,-9,13,13,]),'OR':([9,10,17,18,19,20,21,22,],[14,16,-11,-12,-8,-9,14,14,]),}
+_lr_action_items = {'NAME':([0,7,14,15,16,17,],[5,10,22,23,24,25,]),'GET':([0,8,],[6,6,]),'STAT':([0,],[7,]),'$end':([1,2,3,4,9,11,12,13,22,23,26,27,28,29,30,31,],[0,-1,-2,-3,-5,-4,-6,-13,-14,-15,-11,-12,-9,-10,-7,-8,]),'EQUALS':([5,],[8,]),'URL':([6,],[9,]),'CONTAINS':([9,18,19,20,21,24,25,],[14,14,14,14,14,14,14,]),'EXCLUDE':([9,18,19,20,21,24,25,],[15,15,15,15,15,15,15,]),'UNION':([10,],[16,]),'INTERSECT':([10,],[17,]),'AND':([12,13,22,23,26,27,28,29,30,31,],[18,20,-14,-15,-11,-12,18,18,18,18,]),'OR':([12,13,22,23,26,27,28,29,30,31,],[19,21,-14,-15,-11,-12,19,19,19,19,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'defaut':([0,],[1,]),'assign':([0,],[2,]),'get':([0,6,],[3,8,]),'contrainte_liee':([7,15,16,],[9,21,22,]),'contrainte':([7,13,14,15,16,],[10,19,20,10,10,]),}
+_lr_goto_items = {'defaut':([0,],[1,]),'assign':([0,],[2,]),'get':([0,8,],[3,11,]),'stat':([0,],[4,]),'contrainte_liee':([9,20,21,24,25,],[12,28,29,30,31,]),'contrainte':([9,18,19,20,21,24,25,],[13,26,27,13,13,13,13,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,14 +29,17 @@ _lr_productions = [
   ("S' -> defaut","S'",1,None,None,None),
   ('defaut -> assign','defaut',1,'p_defaut','TP4_Langages_Grammaire.py',65),
   ('defaut -> get','defaut',1,'p_defaut','TP4_Langages_Grammaire.py',66),
-  ('assign -> NAME EQUALS get','assign',3,'p_assign','TP4_Langages_Grammaire.py',70),
-  ('get -> GET URL','get',2,'p_get','TP4_Langages_Grammaire.py',73),
-  ('get -> GET URL contrainte_liee','get',3,'p_get','TP4_Langages_Grammaire.py',74),
-  ('contrainte_liee -> contrainte AND contrainte_liee','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',78),
-  ('contrainte_liee -> contrainte OR contrainte_liee','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',79),
-  ('contrainte_liee -> contrainte_liee AND contrainte','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',80),
-  ('contrainte_liee -> contrainte_liee OR contrainte','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',81),
-  ('contrainte_liee -> contrainte','contrainte_liee',1,'p_contrainte_liee','TP4_Langages_Grammaire.py',82),
-  ('contrainte -> CONTAINS NAME','contrainte',2,'p_contrainte','TP4_Langages_Grammaire.py',86),
-  ('contrainte -> EXCLUDE NAME','contrainte',2,'p_contrainte','TP4_Langages_Grammaire.py',87),
+  ('defaut -> stat','defaut',1,'p_defaut','TP4_Langages_Grammaire.py',67),
+  ('assign -> NAME EQUALS get','assign',3,'p_assign','TP4_Langages_Grammaire.py',71),
+  ('get -> GET URL','get',2,'p_get','TP4_Langages_Grammaire.py',75),
+  ('get -> GET URL contrainte_liee','get',3,'p_get','TP4_Langages_Grammaire.py',76),
+  ('stat -> STAT NAME UNION NAME contrainte_liee','stat',5,'p_stat','TP4_Langages_Grammaire.py',80),
+  ('stat -> STAT NAME INTERSECT NAME contrainte_liee','stat',5,'p_stat','TP4_Langages_Grammaire.py',81),
+  ('contrainte_liee -> contrainte AND contrainte_liee','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',85),
+  ('contrainte_liee -> contrainte OR contrainte_liee','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',86),
+  ('contrainte_liee -> contrainte_liee AND contrainte','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',87),
+  ('contrainte_liee -> contrainte_liee OR contrainte','contrainte_liee',3,'p_contrainte_liee','TP4_Langages_Grammaire.py',88),
+  ('contrainte_liee -> contrainte','contrainte_liee',1,'p_contrainte_liee','TP4_Langages_Grammaire.py',89),
+  ('contrainte -> CONTAINS NAME','contrainte',2,'p_contrainte','TP4_Langages_Grammaire.py',93),
+  ('contrainte -> EXCLUDE NAME','contrainte',2,'p_contrainte','TP4_Langages_Grammaire.py',94),
 ]
