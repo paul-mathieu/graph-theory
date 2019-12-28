@@ -114,7 +114,6 @@ def p_error(p):
 
 
 
-
 def file_to_list(file):
     text_file = open(file, 'r')
     row = []
