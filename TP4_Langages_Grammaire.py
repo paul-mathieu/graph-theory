@@ -116,22 +116,29 @@ def p_error(p):
 
 def file_to_list(file):
     text_file = open(file, 'r')
-    row = []
+    row_output = []
     
     index = 0
     
     row = [line for line in text_file.readlines()]
-    row = [element[0] for element in row]
+#    row = [element[0] for element in row]
     
     for element in row:
-        index_beg = element.index('>')
-        index_end = len(element) - element[::-1].index('>')
         
-        row[index] = row[index][index_beg:index_end]
+#        print(element)
+        
+        if '<' in element:
+            
+            index_beg = element.index('>')
+#            print(index_beg)
+            index_end = len(element) - element[::-1].index('>')
+            
+            row_output.append(row[index][index_beg+1:index_end])
         
         index += 1
-    
-    return row
+        
+#    return [element for element in row_output if element != '' or (element[0] == '<' and element[len(element)-1] == '>')]
+    return row_output
 
 #def p_assign(p):
 #    '''assign : NAME EQUALS expr'''
@@ -184,7 +191,9 @@ data = TP4_Langages_Lexique.data
 
 file = 'idule_content.html'
 
-print(data, end = "\n\n")
+#print(file_to_list(file))
+
+print(data, end = "\n" * 3)
 
 parser = yacc.yacc() # build the parser
 
