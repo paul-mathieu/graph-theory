@@ -80,10 +80,25 @@ def p_get(p):
     '''get : GET URL 
     | GET URL contrainte_liee'''
     
+#    print("valeur de p2 dans p_get")
+#    print(p[2])
     
-    p[0] = file_to_list(p[2])
+    if len(p) == 3:
+        #p[0] > valeur retournée par la fonction
+        #p[1] > 'get'
+        #p[2] > url
+        
+        p[0] = file_to_list(p[2])
     
-    print(len(p))
+    else:
+        
+        p[0] = [element for element in file_to_list(p[2]) if not restrict_word]
+        
+        
+    
+#    print(len(p))
+#    print("valeur de p0 dans p_get")
+#    print(p[0])
     
 def p_stat(p):
     '''stat : STAT NAME UNION NAME contrainte_liee 
@@ -97,6 +112,16 @@ def p_contrainte_liee(p):
     | contrainte_liee AND contrainte 
     | contrainte_liee OR contrainte 
     | contrainte'''
+    
+    #contains x         > co. x string
+    #contains x and y   > co. x and y string
+    #contains x or y    > co. x or y string
+    #exculude x         > ex. x string
+    #exculude x and y   > ex. x and y string
+    #exculude x or y    > ex. x or y string
+    
+    #return > {"contains":(x, y, (z, t)),"exclude":()}
+    #            > contains x or y or (z and t)
     
     print('contrainte_liee')
     
@@ -118,27 +143,29 @@ def file_to_list(file):
     text_file = open(file, 'r')
     row_output = []
     
-    index = 0
-    
-    row = [line for line in text_file.readlines()]
+#    index = 0
+#    
+#    row = [line for line in text_file.readlines()]
+    row_output = [line for line in text_file.readlines()]
 #    row = [element[0] for element in row]
     
-    for element in row:
-        
-#        print(element)
-        
-        if '<' in element:
-            
-            index_beg = element.index('>')
-#            print(index_beg)
-            index_end = len(element) - element[::-1].index('>')
-            
-            row_output.append(row[index][index_beg+1:index_end])
-        
-        index += 1
+#    for element in row:
+##        print(element)
+#        if '<' in element:           
+#            index_beg = element.index('>')            
+#            row_output.append(row[index][index_beg+1:])
+#        index += 1
+#    index = 0
+#        
+#    for element in row_output:
+##        print(element)
+#        if '<' in element:
+#            index_end = element.index('<')
+#            row_output[index] = row_output[index][:index_end]
+#        index += 1
         
 #    return [element for element in row_output if element != '' or (element[0] == '<' and element[len(element)-1] == '>')]
-    return row_output
+    return [element for element in row_output if not element == '']
 
 #def p_assign(p):
 #    '''assign : NAME EQUALS expr'''
